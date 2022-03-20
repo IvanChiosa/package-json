@@ -1,0 +1,105 @@
+/* create some mixins and use them at another place */
+// create a mixin resetlist
+
+.resetted {
+	//@include resetlist;
+}
+
+// create a mixin centerall
+
+
+.centered {
+	//@include centerall;
+}
+
+// create a mixin hide
+
+input.hidden {
+	/* include a hiding mixin */
+	//@include hide;
+
+	&:focus + label, &:hover + label , &:active + label {
+		outline: 5px red dashed;
+	}
+	
+}
+
+// create a mixin triangle that adds a ::before element to an elmement and shapes it
+// that mixin takes 2 arguments
+// first argument is a string "up" or "right" or "bottom" or "left"
+// second argument is a color
+// if arguments are not passed, default is "up" for the direction, and black for the color
+
+
+section#chat {
+	display: grid;
+	grid-template-columns: 10vmin 1fr 10vmin;
+	grid-auto-rows: min-content;
+	gap: 1rem;
+
+	p {
+		margin: 0;
+		background-color: black;
+		color: white;
+		border-radius: 1rem;
+		padding: 0.5rem;
+	}
+
+	p.me {
+		grid-column: 1/3;
+		// include a left triangle here
+		//@include triangle("left");
+	}
+
+	p.you {
+		background-color: blue;
+		grid-column: 2/4;
+		// include a right triangle here
+		//@include triangle("right", blue);
+	}
+}
+
+// create a mixin fades, that adds an infinite fade-in-out animation
+// fading in means becoming opaque and scaled from 0 to 1
+// fading out means becoming transparent and scaled from 1 to 0
+
+
+.fading {
+	max-width: max-content;
+	// include a mixin fades here
+	//@include fades;
+}
+
+// create a mixin font-size
+// use this variable-map to make your live easier
+
+$font-sizes: (
+	xs: 12px,
+	sm: 14px,
+	m: 16px,
+	l: 32px,
+	xl: 48px,
+	xxl: 61px,
+);
+// the mixin takes one argument the size-key
+// let sass stop the transpilation with an error, if an invalid key was given.
+
+// include your mixin in those classes and write some for missing sizes
+.size-xs {
+	//@include font-size(xs);
+}
+
+.size-sm {
+	//@include font-size(sm);
+}
+
+// ... and more... 
+
+// write a function with the same name as the mixin font-size
+// it also takes one argument, the size-key as a string.
+// stop transpilation if an invalid key was given.
+
+.headline {
+	// use the function as a CSS value
+  // font-size: font-size('l');
+}
